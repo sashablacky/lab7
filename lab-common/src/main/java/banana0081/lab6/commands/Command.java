@@ -1,5 +1,12 @@
-package banana0081.lab6.common.commands;
+package banana0081.lab6.commands;
 
-public class Command {
+import banana0081.lab6.exceptions.CommandException;
+import banana0081.lab6.exceptions.InvalidDataException;
 
+@FunctionalInterface
+/**
+ * Command callback interface
+ */
+public interface Command {
+    void run(String arg) throws CommandException, InvalidDataException;
 }
