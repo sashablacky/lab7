@@ -1,4 +1,4 @@
-package banana0081.lab6.collection;
+package banana0081.lab6.abstraction;
 
 import banana0081.lab6.data.HumanBeing;
 

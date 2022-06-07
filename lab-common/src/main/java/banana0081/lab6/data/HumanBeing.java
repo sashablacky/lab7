@@ -46,7 +46,7 @@ public class HumanBeing implements Collectionable {
         this.mood = mood;
         this.car = car;
     }
-    public HumanBeing(){}
+    public HumanBeing(int id, String s, Coordinates coordinates, Boolean aBoolean, Boolean readHasToothpick, float v, Long aLong, WeaponType weaponType, Mood mood, Boolean readCoolness, Car car){}
     /** 
      * @return int
      */

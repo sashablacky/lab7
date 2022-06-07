@@ -1,6 +1,6 @@
 package banana0081.lab6.commands;
 
-import banana0081.lab6.collection.CollectionManager;
+import banana0081.lab6.abstraction.CollectionManager;
 import banana0081.lab6.data.HumanBeing;
 import banana0081.lab6.exceptions.*;
 import banana0081.lab6.file.FileInterface;

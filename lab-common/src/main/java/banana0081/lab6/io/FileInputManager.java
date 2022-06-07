@@ -1,6 +1,6 @@
 package banana0081.lab6.io;
 
-import file.FileManager;
+import banana0081.lab6.file.FileManager;
 
 import java.util.Scanner;
 

@@ -9,58 +9,59 @@ import java.util.Scanner;
 /**
  * basic implementation of InputManager
  */
-public class InputManagerImpl implements InputManager {
+public class HumanBeingReader implements InputManager {
     private static Scanner scanner;
 
-    public InputManagerImpl(Scanner sc){
+    public HumanBeingReader(Scanner sc) {
         scanner = sc;
         scanner.useDelimiter("\n");
     }
 
-    public Scanner getScanner(){
+    public Scanner getScanner() {
         return scanner;
     }
 
-    public void setScanner(Scanner sc){
+    public static void setScanner(Scanner sc) {
         scanner = sc;
     }
-    public String readName() throws EmptyStringException{
+
+    public String readName() throws EmptyStringException {
         String s = scanner.nextLine().trim();
-        if (s.equals("")){
+        if (s.equals("")) {
             throw new EmptyStringException();
         }
         return s;
     }
 
-    public float readXCoord() throws InvalidNumberException{
+    public float readXCoord() throws InvalidNumberException {
         float x;
-        try{
+        try {
             x = Float.parseFloat(scanner.nextLine());
-        }
-        catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new InvalidNumberException();
         }
         if (Float.isInfinite(x) || Float.isNaN(x)) throw new InvalidNumberException("invalid float value");
         return x;
     }
 
-    public Long readYCoord() throws InvalidNumberException{
+    public Long readYCoord() throws InvalidNumberException {
         long y;
-        try{
+        try {
             y = Long.parseLong(scanner.nextLine());
-        }
-        catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new InvalidNumberException();
         }
-        if (y<=-684) throw new InvalidNumberException("must be greater than -684");
+        if (y <= -684) throw new InvalidNumberException("must be greater than -684");
         return y;
     }
-    public Coordinates readCoords() throws InvalidNumberException{
+
+    public Coordinates readCoords() throws InvalidNumberException {
         float x = readXCoord();
         Long y = readYCoord();
-        return new Coordinates(x,y);
+        return new Coordinates(x, y);
     }
-    public static Boolean parseBool() throws InvalidBooleanException{
+
+    public static Boolean parseBool() throws InvalidBooleanException {
         String buf = scanner.nextLine();
         return switch (buf.toLowerCase()) {
             case "true" -> true;
@@ -70,87 +71,88 @@ public class InputManagerImpl implements InputManager {
         };
     }
 
-    public Boolean readRealHero() throws InvalidBooleanException{
+    public Boolean readRealHero() throws InvalidBooleanException {
         Boolean bool;
         bool = parseBool();
-        if (bool == null)
-        {
+        if (bool == null) {
             throw new InvalidBooleanException("realHero must not be null");
         }
         return bool;
     }
-    public Boolean readHasToothpick() throws InvalidBooleanException{
+
+    public Boolean readHasToothpick() throws InvalidBooleanException {
         Boolean bool;
         bool = parseBool();
-        if (bool == null)
-        {
+        if (bool == null) {
             throw new InvalidBooleanException("hasToothpick must not be null");
         }
         return bool;
     }
 
-    public float readImpactSpeed() throws InvalidNumberException{
+    public float readImpactSpeed() throws InvalidNumberException {
         float impactSpeed;
-        try{
+        try {
             impactSpeed = Float.parseFloat(scanner.nextLine());
-        }
-        catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new InvalidNumberException();
         }
-        if (Float.isInfinite(impactSpeed) || Float.isNaN(impactSpeed)) throw new InvalidNumberException("invalid float value");
+        if (Float.isInfinite(impactSpeed) || Float.isNaN(impactSpeed))
+            throw new InvalidNumberException("invalid float value");
         if (impactSpeed > 64.0f) throw new InvalidNumberException("impact speed must not be greater than 64");
         return impactSpeed;
     }
-    public Long readMinutesOfWaiting() throws InvalidNumberException{
+
+    public Long readMinutesOfWaiting() throws InvalidNumberException {
         long minutesOfWaiting;
-        try{
+        try {
             minutesOfWaiting = Long.parseLong(scanner.nextLine());
-        }
-        catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new InvalidNumberException();
         }
         return minutesOfWaiting;
     }
-    public WeaponType readWeaponType() throws InvalidEnumException{
+
+    public WeaponType readWeaponType() throws InvalidEnumException {
         String buf = scanner.nextLine().trim().toUpperCase();
-        if(buf.equals("")){
+        if (buf.equals("")) {
             return null;
-        }
-        else {
-            try{
+        } else {
+            try {
                 return WeaponType.valueOf(buf);
-            } catch(IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 throw new InvalidEnumException();
             }
         }
     }
-    public Mood readMood() throws InvalidEnumException{
+
+    public Mood readMood() throws InvalidEnumException {
         String buf = scanner.nextLine().trim().toUpperCase();
-        if(buf.equals("")){
+        if (buf.equals("")) {
             return null;
-        }
-        else {
-            try{
+        } else {
+            try {
                 return Mood.valueOf(buf);
-            } catch(IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 throw new InvalidEnumException();
             }
         }
     }
-    public Boolean readCoolness() throws InvalidBooleanException{
+
+    public Boolean readCoolness() throws InvalidBooleanException {
         Boolean isCool;
         isCool = parseBool();
-        if (isCool == null)
-        {
+        if (isCool == null) {
             throw new InvalidBooleanException("Coolness must not be null");
         }
         return isCool;
     }
-    public Car readCar() throws InvalidDataException{
+
+    public Car readCar() throws InvalidDataException {
         Boolean isCool = readCoolness();
         return new Car(isCool);
     }
-    public HumanBeing readHumanBeing() throws InvalidDataException{
+
+    public HumanBeing readHumanBeing() throws InvalidDataException {
         HumanBeing person;
 
         String name = readName();
@@ -168,15 +170,8 @@ public class InputManagerImpl implements InputManager {
 
     }
 
-    public CommandWrapper readCommand(){
-        String cmd = scanner.nextLine();
-        if (cmd.contains(" ")){ //if command has argument
-            String[] arr = cmd.split(" ",2);
-            cmd = arr[0];
-            String arg = arr[1];
-            return new CommandWrapper(cmd,arg);
-        } else {
-            return new CommandWrapper(cmd);
-        }
+    @Override
+    public CommandWrapper readCommand() {
+        return null;
     }
 }
