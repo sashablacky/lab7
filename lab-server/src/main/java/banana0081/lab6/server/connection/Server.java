@@ -1,15 +1,18 @@
-package banana0081.lab6.server.interfaces;
+package banana0081.lab6.server.connection;
 
-import banana0081.lab6.abstraction.HumanBeingCollectionManager;
+import banana0081.lab6.collection.HumanBeingCollectionManager;
 import banana0081.lab6.data.HumanBeing;
 import banana0081.lab6.io.IOUtils;
+import banana0081.lab6.server.FileWorker;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 public class Server {
     private String file;
@@ -22,14 +25,20 @@ public class Server {
     public void run(int port) {
         ServerSocketChannel serverSocket;
         FileWorker fileWorker = new FileWorker(collectionManager);
+
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            File file = new File(System.getenv("FILE_PATH"));
-            try (FileOutputStream outputStream = new FileOutputStream(file)){
+            try{File file = new File(System.getenv("FILE_PATH"));
+            file.createNewFile();}
+            catch (NullPointerException | IOException e) {
+                e.printStackTrace();
+            }
+            try{
+                FileOutputStream outputStream = new FileOutputStream(file);
                 for (HumanBeing vals : collectionManager.getCollection()) {
                     outputStream.write(vals.toString().getBytes(StandardCharsets.UTF_8));
                     outputStream.write("\n".getBytes(StandardCharsets.UTF_8));
                 }
-            } catch (IOException e) {
+            } catch (IOException | NullPointerException e) {
                 e.printStackTrace();
             }
         }));
@@ -38,12 +47,12 @@ public class Server {
                 String inputFile = System.getenv("FILE_PATH");
                 File file = new File(inputFile);
                 if (!file.canWrite() || !file.isFile() || file.isDirectory()) throw new IOException();
-                fileWorker.fromCSVtoObj();
+                fileWorker.load();
                 if (collectionManager.getSize() == 0) {
-                    System.out.println("Добавьте объекты с помощью команды add, после чего введите команду save для сохранения в csv!");
+                    System.out.println("Добавьте объекты с помощью команды add, после чего введите команду save для сохранения в xml!");
                 } else System.out.println("Объекты из файла загружены!");
 
-            } catch (IOException e) {
+            } catch (IOException | NullPointerException e) {
                 System.out.println(("Такого файла нет"));
                 System.exit(0);
             }

@@ -1,4 +1,4 @@
-package banana0081.lab6.server.interfaces;
+package banana0081.lab6.server.connection;
 
 import banana0081.lab6.Pack;
 

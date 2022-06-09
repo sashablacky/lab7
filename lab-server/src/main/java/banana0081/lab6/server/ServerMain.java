@@ -1,4 +1,6 @@
-package banana0081.lab6.server.interfaces;
+package banana0081.lab6.server;
+
+import banana0081.lab6.server.connection.Server;
 
 import java.io.IOException;
 

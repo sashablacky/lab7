@@ -1,7 +1,7 @@
 package banana0081.lab6.commands;
 
 import banana0081.lab6.Pack;
-import banana0081.lab6.client.util.HumanBeingReader;
+import banana0081.lab6.io.HumanBeingReader;
 import banana0081.lab6.abstraction.CommandInterface;
 import banana0081.lab6.exceptions.InvalidDataException;
 

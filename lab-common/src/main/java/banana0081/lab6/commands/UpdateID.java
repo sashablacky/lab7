@@ -45,7 +45,7 @@ public class UpdateID implements CommandInterfaceWithArgument {
                         if (commandWords.length == 2) {
                             updateById(commandWords[0], pack1.getHumanBeing(), Integer.parseInt(commandWords[1]));
                         } else if (commandWords[0].equals("stop")) {
-                            print("Дракон был изменён!");
+                            print("Человек был изменён!");
                         } else {
                             printErr("Не указан аргумент или было указано более двух аргументов!");
                         }

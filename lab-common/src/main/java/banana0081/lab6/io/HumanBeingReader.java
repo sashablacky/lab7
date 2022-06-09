@@ -13,7 +13,7 @@ public class HumanBeingReader implements InputManager {
     private static Scanner scanner;
 
     public HumanBeingReader(Scanner sc) {
-        scanner = sc;
+        this.scanner = sc;
         scanner.useDelimiter("\n");
     }
 
@@ -26,6 +26,7 @@ public class HumanBeingReader implements InputManager {
     }
 
     public String readName() throws EmptyStringException {
+        System.out.println("Введите имя");
         String s = scanner.nextLine().trim();
         if (s.equals("")) {
             throw new EmptyStringException();
@@ -35,6 +36,7 @@ public class HumanBeingReader implements InputManager {
 
     public float readXCoord() throws InvalidNumberException {
         float x;
+        System.out.println("Введите x");
         try {
             x = Float.parseFloat(scanner.nextLine());
         } catch (NumberFormatException e) {
@@ -46,6 +48,7 @@ public class HumanBeingReader implements InputManager {
 
     public Long readYCoord() throws InvalidNumberException {
         long y;
+        System.out.println("Введите y");
         try {
             y = Long.parseLong(scanner.nextLine());
         } catch (NumberFormatException e) {
@@ -72,6 +75,7 @@ public class HumanBeingReader implements InputManager {
     }
 
     public Boolean readRealHero() throws InvalidBooleanException {
+        System.out.println("Введите realHero");
         Boolean bool;
         bool = parseBool();
         if (bool == null) {
@@ -81,6 +85,7 @@ public class HumanBeingReader implements InputManager {
     }
 
     public Boolean readHasToothpick() throws InvalidBooleanException {
+        System.out.println("Введите toothpick");
         Boolean bool;
         bool = parseBool();
         if (bool == null) {
@@ -90,6 +95,7 @@ public class HumanBeingReader implements InputManager {
     }
 
     public float readImpactSpeed() throws InvalidNumberException {
+        System.out.println("Введите impactSpeed");
         float impactSpeed;
         try {
             impactSpeed = Float.parseFloat(scanner.nextLine());
@@ -103,6 +109,7 @@ public class HumanBeingReader implements InputManager {
     }
 
     public Long readMinutesOfWaiting() throws InvalidNumberException {
+        System.out.println("Введите minutesOfWaiting");
         long minutesOfWaiting;
         try {
             minutesOfWaiting = Long.parseLong(scanner.nextLine());
@@ -113,6 +120,7 @@ public class HumanBeingReader implements InputManager {
     }
 
     public WeaponType readWeaponType() throws InvalidEnumException {
+        System.out.println("Введите weaponType");
         String buf = scanner.nextLine().trim().toUpperCase();
         if (buf.equals("")) {
             return null;
@@ -126,6 +134,7 @@ public class HumanBeingReader implements InputManager {
     }
 
     public Mood readMood() throws InvalidEnumException {
+        System.out.println("Введите mood");
         String buf = scanner.nextLine().trim().toUpperCase();
         if (buf.equals("")) {
             return null;
@@ -139,6 +148,7 @@ public class HumanBeingReader implements InputManager {
     }
 
     public Boolean readCoolness() throws InvalidBooleanException {
+        System.out.println("Введите крутость машины");
         Boolean isCool;
         isCool = parseBool();
         if (isCool == null) {

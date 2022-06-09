@@ -1,5 +1,6 @@
-package banana0081.lab6.abstraction;
+package banana0081.lab6.collection;
 
+import banana0081.lab6.abstraction.CollectionManager;
 import banana0081.lab6.data.HumanBeing;
 
 import java.util.Collections;
@@ -86,7 +87,14 @@ public class HumanBeingCollectionManager implements CollectionManager<HumanBeing
         }
         return false;
     }
-
+    public HumanBeing getElementById(Integer id){
+        for (HumanBeing humanBeing : collection){
+            if (humanBeing.getId() == id){
+                return(humanBeing);
+            }
+        }
+        return null;
+    }
     /**
      * Delete element by ID
      * @param id ID

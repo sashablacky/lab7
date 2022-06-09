@@ -1,8 +1,9 @@
-package banana0081.lab6.server.interfaces;
+package banana0081.lab6.server.connection;
 
 import banana0081.lab6.Pack;
-import banana0081.lab6.abstraction.HumanBeingCollectionManager;
+import banana0081.lab6.collection.HumanBeingCollectionManager;
 import banana0081.lab6.io.HumanBeingReader;
+import banana0081.lab6.server.commands.CommandInvokerServer;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

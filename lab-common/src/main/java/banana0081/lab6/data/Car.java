@@ -1,6 +1,8 @@
 package banana0081.lab6.data;
 
-public class Car implements Validatable {
+import java.io.Serializable;
+
+public class Car implements Validatable, Serializable {
     private Boolean cool;
 
     public Car(Boolean howCool){
