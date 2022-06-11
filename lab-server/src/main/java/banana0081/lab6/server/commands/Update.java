@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Update implements CommandWithArguments {
     private String[] arguments;
-    private HumanBeingCollectionManager collectionManager;
+    private final HumanBeingCollectionManager collectionManager;
     private Scanner in;
 
     public Update(HumanBeingCollectionManager collectionManager) {

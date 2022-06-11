@@ -5,7 +5,7 @@ import banana0081.lab6.collection.HumanBeingCollectionManager;
 import banana0081.lab6.server.interfaces.Command;
 
 public class Clear implements Command {
-    private HumanBeingCollectionManager collectionManager;
+    private final HumanBeingCollectionManager collectionManager;
 
     public Clear(HumanBeingCollectionManager collectionManager) {
         this.collectionManager = collectionManager;
@@ -13,9 +13,12 @@ public class Clear implements Command {
 
     @Override
     public Pack execute(Pack pack) {
-        String response = "";
         collectionManager.clear();
-        pack.pack("Collection was cleared!\n");
+        if (collectionManager.getCollection().isEmpty()){
+            pack.pack("Collection was cleared!\n");
+        } else{
+            pack.pack("Collection was not cleared\n");
+        }
         return pack;
     }
 }

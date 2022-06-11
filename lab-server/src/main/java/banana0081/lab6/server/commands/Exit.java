@@ -15,7 +15,7 @@ public class Exit implements Command {
     @Override
     public Pack execute(Pack pack) {
 //        collectionManager.save;
-        pack.pack("Вы откллючились от сервера\n");
+        pack.pack("Вы отключились от сервера\n");
         return pack;
     }
 

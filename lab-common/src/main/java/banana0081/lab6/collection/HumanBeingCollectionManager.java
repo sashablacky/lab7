@@ -15,9 +15,13 @@ import static banana0081.lab6.io.OutputManager.print;
  * Operates collection.
  */
 public class HumanBeingCollectionManager implements CollectionManager<HumanBeing> {
-    private LinkedList<HumanBeing> collection;
-    private HashSet<Integer> uniqueIds;
-    private java.time.LocalDateTime initDate;
+    private LinkedList<HumanBeing> collection = new LinkedList<>();
+    HashSet<Integer> uniqueIds;
+    java.time.LocalDateTime initDate;
+
+    public HumanBeingCollectionManager(){
+
+    }
 
     public HumanBeingCollectionManager(String sysEnvironment){
         uniqueIds = new HashSet<>();
@@ -66,10 +70,20 @@ public class HumanBeingCollectionManager implements CollectionManager<HumanBeing
      * @param humanBeing Element of collection
      */
     public void add(HumanBeing humanBeing){
+        int previousSize = getPreviousSize();
         humanBeing.setId(generateNextId());
         collection.add(humanBeing);
-        print("Added element:");
-        print(humanBeing.toString());
+        int currentSize = collection.size();
+        if (previousSize == currentSize){
+            print("Added element:");
+            print(humanBeing.toString());
+        } else {
+            print("Nothing was added");
+        }
+    }
+
+    public int getPreviousSize(){
+        return collection.size();
     }
 
     /**
@@ -154,6 +168,11 @@ public class HumanBeingCollectionManager implements CollectionManager<HumanBeing
         print("element #"+Integer.toString(id)+" successfully deleted");
     }
 
+    public LinkedList<HumanBeing> saveOld(){
+        return getCollection();
+    }
+
+
     public void shuffle() {
         Collections.shuffle(collection);
         int id = 1;
@@ -161,6 +180,7 @@ public class HumanBeingCollectionManager implements CollectionManager<HumanBeing
             humanBeing.setId(id);
             id+=1;
         }
+
     }
 
     public void print_unique_impact_speed(){
@@ -173,12 +193,12 @@ public class HumanBeingCollectionManager implements CollectionManager<HumanBeing
             }
         }
     }
-    public void sum_of_minutes_of_waiting(){
+    public long sum_of_minutes_of_waiting(){
         long sum = 0;
         for (HumanBeing humanBeing: collection){
             sum += humanBeing.getMinutesOfWaiting();
         }
-        print(sum);
+        return sum;
     }
     public void min_by_minutes_of_waiting(){
         long min_minutes = collection.getFirst().getMinutesOfWaiting();

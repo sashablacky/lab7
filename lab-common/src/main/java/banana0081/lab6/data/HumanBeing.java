@@ -1,8 +1,11 @@
 package banana0081.lab6.data;
 
+import banana0081.lab6.collection.HumanBeingCollectionManager;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -48,6 +51,10 @@ public class HumanBeing implements Collectionable, Serializable {
         this.car = car;
     }
     public HumanBeing(int id, String s, Coordinates coordinates, Boolean aBoolean, Boolean readHasToothpick, float v, Long aLong, WeaponType weaponType, Mood mood, Boolean readCoolness, Car car){}
+    public HumanBeing(){};
+
+
+
     /** 
      * @return int
      */

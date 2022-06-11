@@ -11,8 +11,13 @@ public class Add implements Command {
 
     @Override
     public Pack execute(Pack pack) {
+        int previousSize = collectionManager.getPreviousSize();
         collectionManager.add(pack.getHumanBeing());
-        pack.pack("Человек добавлен\n");
+        if (previousSize == collectionManager.getSize()){
+            pack.pack("Человек добавлен\n");
+        } else {
+            pack.pack("Человек не был добавлен\n");
+        }
         return pack;
     }
 

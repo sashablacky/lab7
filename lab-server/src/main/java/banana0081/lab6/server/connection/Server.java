@@ -1,9 +1,11 @@
 package banana0081.lab6.server.connection;
 
+import banana0081.lab6.Pack;
 import banana0081.lab6.collection.HumanBeingCollectionManager;
 import banana0081.lab6.data.HumanBeing;
 import banana0081.lab6.io.IOUtils;
 import banana0081.lab6.server.FileWorker;
+import banana0081.lab6.server.commands.Save;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,6 +14,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
 import java.util.Map;
 
 public class Server {
@@ -33,12 +36,10 @@ public class Server {
                 e.printStackTrace();
             }
             try{
-                FileOutputStream outputStream = new FileOutputStream(file);
-                for (HumanBeing vals : collectionManager.getCollection()) {
-                    outputStream.write(vals.toString().getBytes(StandardCharsets.UTF_8));
-                    outputStream.write("\n".getBytes(StandardCharsets.UTF_8));
-                }
-            } catch (IOException | NullPointerException e) {
+                Save save = new Save(collectionManager);
+                Pack pack = new Pack();
+                save.execute(pack);
+            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
         }));
@@ -47,10 +48,11 @@ public class Server {
                 String inputFile = System.getenv("FILE_PATH");
                 File file = new File(inputFile);
                 if (!file.canWrite() || !file.isFile() || file.isDirectory()) throw new IOException();
-                fileWorker.load();
+                LinkedList<HumanBeing> loadedCollection = fileWorker.load();
+                collectionManager.load(loadedCollection);
                 if (collectionManager.getSize() == 0) {
                     System.out.println("Добавьте объекты с помощью команды add, после чего введите команду save для сохранения в xml!");
-                } else System.out.println("Объекты из файла загружены!");
+                } else System.out.println("Объекты из файла загружены! Добавьте объекты с помощью команды add, после чего введите команду save для сохранения в xml.");
 
             } catch (IOException | NullPointerException e) {
                 System.out.println(("Такого файла нет"));

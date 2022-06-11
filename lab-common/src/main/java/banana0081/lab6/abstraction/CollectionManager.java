@@ -67,7 +67,7 @@ public interface CollectionManager<T> {
 
     public void shuffle();
 
-    public void sum_of_minutes_of_waiting();
+    public long sum_of_minutes_of_waiting();
 
     public void min_by_minutes_of_waiting();
 

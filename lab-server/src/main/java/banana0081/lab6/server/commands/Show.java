@@ -5,10 +5,8 @@ import banana0081.lab6.collection.HumanBeingCollectionManager;
 import banana0081.lab6.data.HumanBeing;
 import banana0081.lab6.server.interfaces.Command;
 
-import static banana0081.lab6.io.OutputManager.print;
-
 public class Show implements Command {
-    private HumanBeingCollectionManager collectionManager;
+    private final HumanBeingCollectionManager collectionManager;
 
     public Show(HumanBeingCollectionManager collectionManager) {
         this.collectionManager = collectionManager;
@@ -25,5 +23,4 @@ public class Show implements Command {
         pack.pack(s);
         return pack;
     }
-
 }

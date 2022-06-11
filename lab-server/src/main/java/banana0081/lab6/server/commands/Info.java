@@ -5,7 +5,7 @@ import banana0081.lab6.collection.HumanBeingCollectionManager;
 import banana0081.lab6.server.interfaces.Command;
 
 public class Info implements Command {
-    private HumanBeingCollectionManager collectionManager;
+    private final HumanBeingCollectionManager collectionManager;
 
     public Info(HumanBeingCollectionManager collectionManager) {
         this.collectionManager = collectionManager;

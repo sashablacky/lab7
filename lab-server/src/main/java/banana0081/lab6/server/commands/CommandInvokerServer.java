@@ -13,9 +13,9 @@ import java.util.Scanner;
 
 public class CommandInvokerServer {
     Scanner in;
-    private HashMap<String, Command> commandWithoutArguments;
-    private HashMap<String, CommandWithArguments> commandWithArguments;
-    private HumanBeingCollectionManager collectionManager;
+    private final HashMap<String, Command> commandWithoutArguments;
+    private final HashMap<String, CommandWithArguments> commandWithArguments;
+    private final HumanBeingCollectionManager collectionManager;
     HumanBeingReader humanBeingReader;
     SocketChannel client;
 
@@ -41,6 +41,10 @@ public class CommandInvokerServer {
         registerWithArgument("execute_script", new ExecuteScript());
         register("exit", new Exit(collectionManager));//
         register("shuffle", new Shuffle(collectionManager));//
+        register("sum_of_minutes_of_waiting", new SumOfMinutesOfWaiting(collectionManager));
+        register("print_unique_impact_speed", new PrintUniqueImpactSpeed(collectionManager));
+        register("min_by_minutes_of_waiting", new MinByMinutesOfWaiting(collectionManager));
+        register("save", new Save(collectionManager));
     }
 
     private void register(String name, Command command) {

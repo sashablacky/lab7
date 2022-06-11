@@ -18,9 +18,11 @@ public class Pack implements Serializable {
         this.arg = arg;
     }
 
-    public void pack(String commandName, HumanBeing dragon) {
+
+
+    public void pack(String commandName, HumanBeing humanBeing) {
         this.commandName = commandName;
-        this.humanBeing = dragon;
+        this.humanBeing = humanBeing;
     }
 
     public String getCommandName() {
