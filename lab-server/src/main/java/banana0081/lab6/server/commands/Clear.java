@@ -18,9 +18,9 @@ public class Clear implements Command {
         collectionManager.clear();
         HTTPResponse httpResponse = new HTTPResponse();
         if (collectionManager.getCollection().isEmpty()){
-            httpResponse.pack(200, "Collection was cleared!\n");
+            httpResponse.pack(200, "OK");
         } else{
-            httpResponse.pack(500,"Collection was not cleared\n");
+            httpResponse.pack(500,"Internal Error");
         }
         return httpResponse;
     }

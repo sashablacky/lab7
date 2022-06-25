@@ -10,13 +10,14 @@ import java.util.Scanner;
  * basic implementation of InputManager
  */
 public class HumanBeingReader implements InputManager {
-    private static Scanner scanner;
+    private static Scanner scanner = new Scanner(System.in);
 
     public HumanBeingReader(Scanner sc) {
         this.scanner = sc;
         scanner.useDelimiter("\n");
     }
-
+    public HumanBeingReader() {
+    }
     public Scanner getScanner() {
         return scanner;
     }

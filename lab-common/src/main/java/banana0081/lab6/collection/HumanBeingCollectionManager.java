@@ -74,7 +74,7 @@ public class HumanBeingCollectionManager implements CollectionManager<HumanBeing
         humanBeing.setId(generateNextId());
         collection.add(humanBeing);
         int currentSize = collection.size();
-        if (previousSize == currentSize){
+        if (previousSize < currentSize){
             print("Added element:");
             print(humanBeing.toString());
         } else {

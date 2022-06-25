@@ -76,12 +76,12 @@ public class HttpParser {
             httpResponse.setHttpCode(Integer.parseInt(requestLine.split(" ")[1]));
         } catch(IllegalArgumentException ignored){}
         try {
-            httpResponse.setReasonPhrase(requestLine.split(" ")[1].substring(1));
+            httpResponse.setReasonPhrase(requestLine.split(" ", 3)[2]);
         } catch (StringIndexOutOfBoundsException e){e.printStackTrace();}
         httpResponse.setBody(body.toString());
         httpResponse.setHost(new Header("host", headers.get("Host")));
         httpResponse.setContentType(new Header("Content-Type", headers.get("Content-Type")));
-        httpResponse.setContentLength(new Header("Content", headers.get("Content-Type")));
+        httpResponse.setContentLength(new Header("Content-Length", headers.get("Content-Length")));
         return httpResponse;
     }
 }

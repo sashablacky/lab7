@@ -6,7 +6,7 @@ public class ClientMain {
         try {
             client.run(8080);
         } catch(Exception e){
-            System.out.println("это я тоже предусмотрел (или нет)");
+            e.printStackTrace();
         }
     }
 }

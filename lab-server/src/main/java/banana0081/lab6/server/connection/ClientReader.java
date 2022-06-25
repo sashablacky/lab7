@@ -67,6 +67,9 @@ public class ClientReader {
                 buffer.put(Response.serialize(httpResponse));
                 buffer.flip();
                 client.write(buffer);
+                if(buffer.limit()>32000) {
+                    client.shutdownOutput();
+                }
                 buffer.clear();
             }
         }

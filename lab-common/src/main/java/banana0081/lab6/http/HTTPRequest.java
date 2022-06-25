@@ -93,7 +93,16 @@ public class HTTPRequest implements Serializable {
         }
         return humanBeing;
     }
-
+    public String[] getArguments(){
+        String[] args = new String[10];
+        try{
+            XmlMapper xmlMapper = new XmlMapper();
+            args = xmlMapper.readValue(body, new TypeReference<String[]>() {});
+        } catch(IOException e){
+            printErr(e.getMessage());
+        }
+        return args;
+    }
     public void pack(String nameCommand, HttpMethod method) {
         this.method = method;
         this.command = nameCommand;

@@ -5,6 +5,7 @@ import banana0081.lab6.collection.HumanBeingCollectionManager;
 import banana0081.lab6.http.HTTPRequest;
 import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.CommandWithArguments;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import java.util.HashSet;
 import java.util.Scanner;
@@ -23,7 +24,7 @@ public class RemoveById implements CommandWithArguments {
     @Override
     public HTTPResponse execute(HTTPRequest httpRequest) {
         HTTPResponse httpResponse = new HTTPResponse();
-        for (String argument : arguments) {
+        for (String argument : httpRequest.getArguments()) {
             collectionManager.removeByID(Integer.parseInt(argument));
         }
         httpResponse.pack(200, "OK");

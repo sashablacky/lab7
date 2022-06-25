@@ -16,10 +16,10 @@ public class Add implements Command {
         int previousSize = collectionManager.getPreviousSize();
         HTTPResponse httpResponse = new HTTPResponse();
         collectionManager.add(httpRequest.getHumanBeing());
-        if (previousSize == collectionManager.getSize()){
-            httpResponse.pack(201, "Human being was added\n");
+        if (previousSize < collectionManager.getSize()){
+            httpResponse.pack(201, "Created");
         } else {
-            httpResponse.pack(500, "Human being could not be added\n");
+            httpResponse.pack(500, "Internal Error");
         }
         return httpResponse;
     }

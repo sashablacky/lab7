@@ -57,7 +57,7 @@ public class CommandInvoker {
                 command = commandWithArgument.get(word[0].toLowerCase(Locale.ROOT));
                 command.getArg(arg);
                 command.execute(word[0], pack);
-
+                return true;
             } else {
                 printErr("У команды " + word[0] + " должен быть один аргумент!");
                 return false;
@@ -76,6 +76,5 @@ public class CommandInvoker {
             printErr("Комманда " + word[0] + " не распознана, введите корректную команду!");
             return false;
         }
-        return false;
     }
 }

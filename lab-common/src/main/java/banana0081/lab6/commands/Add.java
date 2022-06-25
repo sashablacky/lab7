@@ -15,8 +15,10 @@ public class Add implements CommandInterface {
 
     @Override
     public HTTPRequest execute(String nameCommand, HTTPRequest httpRequest) {
-        ConsoleInputManager humanBeingReader = new ConsoleInputManager();
+        HumanBeingReader humanBeingReader = new HumanBeingReader();
+        try {
             httpRequest.pack(nameCommand, humanBeingReader.readHumanBeing(), HttpMethod.POST);
+        } catch(InvalidDataException e){System.out.println(e.getMessage());}
         return httpRequest;
     }
 }
