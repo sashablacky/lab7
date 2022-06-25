@@ -2,6 +2,8 @@ package banana0081.lab6.server.commands;
 
 import banana0081.lab6.Pack;
 import banana0081.lab6.collection.HumanBeingCollectionManager;
+import banana0081.lab6.http.HTTPRequest;
+import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.io.HumanBeingReader;
 import banana0081.lab6.server.interfaces.Command;
 import banana0081.lab6.server.interfaces.CommandWithArguments;
@@ -55,25 +57,28 @@ public class CommandInvokerServer {
         commandWithArguments.put(name, command);
     }
 
-    public Pack execute(Pack pack) {
+    public HTTPResponse execute(HTTPRequest httpRequest) {
         try {
-            String nameCommand = pack.getCommandName();
-            String[] args = pack.getArg();
-            Pack response = new Pack();
+            String nameCommand = httpRequest.getCommand();
+            String[] args = httpRequest.getBody().split("\n");
+            HTTPResponse response = new HTTPResponse();
             if (commandWithArguments.containsKey(nameCommand.toLowerCase(Locale.ROOT))) {
                 CommandWithArguments command;
                 command = commandWithArguments.get(nameCommand.toLowerCase(Locale.ROOT));
                 command.getArgs(args);
-                response = command.execute(pack);
+                response = command.execute(httpRequest);
             } else if (commandWithoutArguments.containsKey(nameCommand.toLowerCase(Locale.ROOT))) {
                 Command command;
                 command = commandWithoutArguments.get(nameCommand.toLowerCase(Locale.ROOT));
-                response = command.execute(pack);
+                response = command.execute(httpRequest);
+            } else {
+                response.pack(new String[]{"Команда не найдена!"}, 404, "Not Found");
             }
             return response;
         } catch (NullPointerException e) {
-            Pack response = new Pack();
-            response.pack("Сервер не получил команду");
+            HTTPResponse response = new HTTPResponse();
+            response.setHttpCode(400);
+            response.setReasonPhrase("Сервер не получил команду или такой команды не существует");
             return response;
         }
     }

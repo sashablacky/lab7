@@ -1,9 +1,8 @@
 package banana0081.lab6.commands;
 
-import banana0081.lab6.Pack;
 import banana0081.lab6.abstraction.CommandInterface;
 import banana0081.lab6.abstraction.CommandInterfaceWithArgument;
-import banana0081.lab6.exceptions.InvalidDataException;
+import banana0081.lab6.http.HTTPRequest;
 
 import java.net.Socket;
 import java.util.Arrays;
@@ -34,8 +33,6 @@ public class CommandInvoker {
         register("min_by_minutes_of_waiting", new CommandWithoutArg());
         register("print_unique_impact_speed", new CommandWithoutArg());
         register("add", new Add());
-        register("remove_first", new RemoveFirst());
-        register("remove_last", new RemoveLast());
         registerWithArg("update_id", new UpdateID(socket));
         registerWithArg("remove_by_id", new RemoveById());
         registerWithArg("execute_script", new ExecuteScript(socket));
@@ -50,7 +47,7 @@ public class CommandInvoker {
         commandWithArgument.put(nameCommand, commandWithArg);
     }
 
-    public boolean execute(String str, Pack pack) {
+    public boolean execute(String str, HTTPRequest pack) {
         String[] word = str.trim().split(" ");
         String[] arg = Arrays.copyOfRange(word, 1, word.length);
 

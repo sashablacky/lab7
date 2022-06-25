@@ -3,6 +3,8 @@ package banana0081.lab6.server.commands;
 import banana0081.lab6.Pack;
 import banana0081.lab6.abstraction.CollectionManager;
 import banana0081.lab6.exceptions.FileException;
+import banana0081.lab6.http.HTTPRequest;
+import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.Command;
 import static banana0081.lab6.io.OutputManager.printErr;
 
@@ -21,7 +23,8 @@ public class Save implements Command {
 
 
     @Override
-    public Pack execute(Pack pack) {
+    public HTTPResponse execute(HTTPRequest httpRequest) {
+        HTTPResponse httpResponse = new HTTPResponse();
         try{
             String path = System.getenv("FILE_PATH");
             if (path == null) throw new IOException();
@@ -42,7 +45,7 @@ public class Save implements Command {
         } catch (IOException e) {
             printErr("cannot access file");
         }
-        pack.pack("коллекция сохранена в файл\n");
-        return pack;
+        httpResponse.pack(200, "OK");
+        return httpResponse;
     }
 }

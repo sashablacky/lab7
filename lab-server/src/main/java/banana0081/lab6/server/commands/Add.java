@@ -1,6 +1,8 @@
 package banana0081.lab6.server.commands;
 import banana0081.lab6.Pack;
 import banana0081.lab6.collection.HumanBeingCollectionManager;
+import banana0081.lab6.http.HTTPRequest;
+import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.Command;
 public class Add implements Command {
     private final HumanBeingCollectionManager collectionManager;
@@ -10,15 +12,16 @@ public class Add implements Command {
     }
 
     @Override
-    public Pack execute(Pack pack) {
+    public HTTPResponse execute(HTTPRequest httpRequest) {
         int previousSize = collectionManager.getPreviousSize();
-        collectionManager.add(pack.getHumanBeing());
+        HTTPResponse httpResponse = new HTTPResponse();
+        collectionManager.add(httpRequest.getHumanBeing());
         if (previousSize == collectionManager.getSize()){
-            pack.pack("Человек добавлен\n");
+            httpResponse.pack(201, "Human being was added\n");
         } else {
-            pack.pack("Человек не был добавлен\n");
+            httpResponse.pack(500, "Human being could not be added\n");
         }
-        return pack;
+        return httpResponse;
     }
 
 }

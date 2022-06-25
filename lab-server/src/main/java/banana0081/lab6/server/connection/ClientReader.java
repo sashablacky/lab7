@@ -2,6 +2,8 @@ package banana0081.lab6.server.connection;
 
 import banana0081.lab6.Pack;
 import banana0081.lab6.collection.HumanBeingCollectionManager;
+import banana0081.lab6.http.HTTPRequest;
+import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.io.HumanBeingReader;
 import banana0081.lab6.server.commands.CommandInvokerServer;
 
@@ -48,8 +50,8 @@ public class ClientReader {
     }
 
     public void read(SelectionKey key, ByteBuffer buffer) throws IOException, ClassNotFoundException {
-        Pack pack = new Pack();
-        pack.pack("");
+        HTTPRequest httpRequest = new HTTPRequest();
+        HTTPResponse httpResponse = new HTTPResponse();
         Request request = new Request();
         SocketChannel client = (SocketChannel) key.channel();
         CommandInvokerServer commandInvoker = new CommandInvokerServer(collectionManager, in, HumanBeingReader, client);
@@ -58,12 +60,11 @@ public class ClientReader {
             client.close();
         } else {
             buffer.flip();
-            pack = (Pack) request.deserialize(buffer);
+            httpRequest = request.deserialize(buffer);
             buffer.clear();
-            pack = commandInvoker.execute(pack);
-            if (!pack.getCommandName().equals("get_human_being")) {
-                Response response = new Response();
-                buffer.put(response.serialize(pack));
+            httpResponse = commandInvoker.execute(httpRequest);
+            if (!httpRequest.getCommand().equals("get_human_being")) {
+                buffer.put(Response.serialize(httpResponse));
                 buffer.flip();
                 client.write(buffer);
                 buffer.clear();

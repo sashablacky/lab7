@@ -3,6 +3,7 @@ package banana0081.lab6.server.connection;
 import banana0081.lab6.Pack;
 import banana0081.lab6.collection.HumanBeingCollectionManager;
 import banana0081.lab6.data.HumanBeing;
+import banana0081.lab6.http.HTTPRequest;
 import banana0081.lab6.io.IOUtils;
 import banana0081.lab6.server.FileWorker;
 import banana0081.lab6.server.commands.Save;
@@ -37,8 +38,8 @@ public class Server {
             }
             try{
                 Save save = new Save(collectionManager);
-                Pack pack = new Pack();
-                save.execute(pack);
+                HTTPRequest httpRequest = new HTTPRequest();
+                save.execute(httpRequest);
             } catch (NullPointerException e) {
                 e.printStackTrace();
             }

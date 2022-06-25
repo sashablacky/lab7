@@ -2,6 +2,8 @@ package banana0081.lab6.server.commands;
 
 import banana0081.lab6.Pack;
 import banana0081.lab6.collection.HumanBeingCollectionManager;
+import banana0081.lab6.http.HTTPRequest;
+import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.CommandWithArguments;
 
 import java.util.Scanner;
@@ -16,13 +18,15 @@ public class Update implements CommandWithArguments {
     }
 
     @Override
-    public Pack execute(Pack pack) {
+    public HTTPResponse execute(HTTPRequest httpRequest) {
+        HTTPResponse httpResponse = new HTTPResponse();
         if (collectionManager.getElementById(Integer.parseInt(arguments[0])) != null) {
-            pack.pack("", collectionManager.getElementById(Integer.parseInt(arguments[0])));
+            httpResponse.pack(collectionManager.getElementById(Integer.parseInt(arguments[0])), 200, "OK");
         }
-        else
-            pack.pack("Элемента с данным id нет в коллекции!");
-        return pack;
+        else {
+            httpResponse.pack(404, "Not Found");
+        }
+        return httpResponse;
     }
 
     @Override

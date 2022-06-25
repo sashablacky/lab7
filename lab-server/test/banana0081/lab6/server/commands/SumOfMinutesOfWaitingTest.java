@@ -3,6 +3,7 @@ package banana0081.lab6.server.commands;
 import banana0081.lab6.Pack;
 import banana0081.lab6.collection.HumanBeingCollectionManager;
 import banana0081.lab6.data.HumanBeing;
+import banana0081.lab6.http.HTTPRequest;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,7 +21,7 @@ class SumOfMinutesOfWaitingTest {
         collectionManager.getCollection().add(humanBeing2);
         humanBeing2.setMinutesOfWaiting(5);
         SumOfMinutes = new SumOfMinutesOfWaiting(collectionManager);
-        SumOfMinutes.execute(new Pack());
+        SumOfMinutes.execute(new HTTPRequest());
         assertEquals(8, SumOfMinutes.getResult());
     }
 }

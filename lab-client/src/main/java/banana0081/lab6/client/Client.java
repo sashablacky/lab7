@@ -4,6 +4,8 @@ import banana0081.lab6.Pack;
 import banana0081.lab6.commands.CommandInvoker;
 import banana0081.lab6.connection.Request;
 import banana0081.lab6.connection.Response;
+import banana0081.lab6.http.HTTPRequest;
+import banana0081.lab6.http.HttpMethod;
 import banana0081.lab6.io.InputManagerImpl;
 
 import java.io.IOException;
@@ -16,7 +18,7 @@ import static banana0081.lab6.io.OutputManager.print;
 import static banana0081.lab6.io.OutputManager.printErr;
 
 public class Client {
-    private final Pack pack = new Pack();
+    private final HTTPRequest pack = new HTTPRequest();
     private final Response response = new Response();
     private final Request request = new Request();
     private final Scanner in = new Scanner(System.in);
@@ -24,7 +26,7 @@ public class Client {
 
     Scanner sc = new Scanner(System.in);
     public void run(int port) {
-        InetAddress address = null;
+        InetAddress address;
         try {
             address = Inet4Address.getByName("localhost");
             while (true) {

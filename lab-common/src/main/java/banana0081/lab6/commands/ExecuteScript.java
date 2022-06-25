@@ -4,6 +4,8 @@ import banana0081.lab6.Pack;
 import banana0081.lab6.abstraction.CommandInterfaceWithArgument;
 import banana0081.lab6.connection.Request;
 import banana0081.lab6.connection.Response;
+import banana0081.lab6.http.HTTPRequest;
+import banana0081.lab6.http.HttpMethod;
 import banana0081.lab6.io.HumanBeingReader;
 
 import java.io.File;
@@ -19,7 +21,7 @@ public class ExecuteScript implements CommandInterfaceWithArgument {
     private String[] arg;
     Set<String> scriptsInProcess = new HashSet<>();
     CommandInvoker commandInvoker;
-    Pack pack1 = new Pack();
+    HTTPRequest pack1 = new HTTPRequest();
     Request request = new Request();
     Response response = new Response();
     private Socket socket;
@@ -29,7 +31,7 @@ public class ExecuteScript implements CommandInterfaceWithArgument {
     }
 
     @Override
-    public Pack execute(String nameCommand, Pack pack) {
+    public HTTPRequest execute(String nameCommand, HTTPRequest pack) {
         String fileName = arg[0];
         File file = new File(fileName);
         String absolutePath = file.getAbsolutePath();
@@ -59,7 +61,7 @@ public class ExecuteScript implements CommandInterfaceWithArgument {
         }
         scriptsInProcess.remove(absolutePath);
         HumanBeingReader.setScanner(new Scanner(System.in));
-        pack.pack(nameCommand, arg);
+        pack.pack(nameCommand, arg, HttpMethod.POST);
         return pack;
     }
 

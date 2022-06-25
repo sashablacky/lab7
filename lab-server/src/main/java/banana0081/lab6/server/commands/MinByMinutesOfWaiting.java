@@ -3,6 +3,8 @@ package banana0081.lab6.server.commands;
 import banana0081.lab6.Pack;
 import banana0081.lab6.collection.HumanBeingCollectionManager;
 import banana0081.lab6.data.HumanBeing;
+import banana0081.lab6.http.HTTPRequest;
+import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.Command;
 
 import java.util.LinkedList;
@@ -22,8 +24,9 @@ public class MinByMinutesOfWaiting implements Command {
     public static long getMin(){
         return minutesOfWaiting;
     }
-
-    public Pack execute(Pack pack) {
+    @Override
+    public HTTPResponse execute(HTTPRequest httpRequest) {
+        HTTPResponse httpResponse = new HTTPResponse();
         long minutesOfWaiting = Long.MAX_VALUE;
         LinkedList<HumanBeing> Collection = collectionManager.getCollection();
         for(HumanBeing humanBeing : Collection){
@@ -33,12 +36,13 @@ public class MinByMinutesOfWaiting implements Command {
             }
         }
         if(minutesOfWaiting != Long.MAX_VALUE){
-            pack.pack(String.valueOf(minutesOfWaiting));
+            httpResponse.pack(new String[]{String.valueOf(minutesOfWaiting)}, 200, "OK");
             setMin(minutesOfWaiting);
             System.out.println("MinByMinutesOfWaiting Выполнено успешно");
         } else {
+            httpResponse.pack(new String[]{String.valueOf(minutesOfWaiting)}, 500, "Element was not found");
             System.out.println("Что-то пошло не так");
         }
-        return pack;
+            return httpResponse;
     }
 }

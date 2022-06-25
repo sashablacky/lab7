@@ -3,6 +3,8 @@ package banana0081.lab6.server.commands;
 import banana0081.lab6.Pack;
 import banana0081.lab6.collection.HumanBeingCollectionManager;
 import banana0081.lab6.data.HumanBeing;
+import banana0081.lab6.http.HTTPRequest;
+import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.Command;
 
 import java.util.HashSet;
@@ -26,7 +28,8 @@ public class PrintUniqueImpactSpeed implements Command {
         this.collectionManager = collectionManager;
     }
     @Override
-    public Pack execute(Pack pack) {
+    public HTTPResponse execute(HTTPRequest httpRequest) {
+        HTTPResponse httpResponse = new HTTPResponse();
         Set<Float> UniqueImpactSpeed = new HashSet<Float>();
         LinkedList<HumanBeing> Collection = collectionManager.getCollection();
         for(HumanBeing humanBeing : Collection){
@@ -40,11 +43,12 @@ public class PrintUniqueImpactSpeed implements Command {
         if(!response.equals("")){
             setResponse(response);
             System.out.println(response);
-            pack.pack(response);
+            httpResponse.pack(new String[]{response}, 200, "OK");
             System.out.println("PrintUniqueImpactSpeed Выполнено успешно");
         } else {
+            httpResponse.pack(new String[]{response}, 500, "Internal Error");
             System.out.println("Что-то пошло не так");
         }
-        return pack;
+        return httpResponse;
     }
 }

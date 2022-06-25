@@ -6,6 +6,9 @@ import banana0081.lab6.abstraction.CommandInterfaceWithArgument;
 import banana0081.lab6.connection.Request;
 import banana0081.lab6.connection.Response;
 import banana0081.lab6.data.HumanBeing;
+import banana0081.lab6.http.HTTPRequest;
+import banana0081.lab6.http.HTTPResponse;
+import banana0081.lab6.http.HttpMethod;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -18,20 +21,20 @@ public class UpdateID implements CommandInterfaceWithArgument {
     private String[] arg;
     private final Request request = new Request();
     private final Response response = new Response();
-    private Pack pack1 = new Pack();
+    private HTTPRequest pack1 = new HTTPRequest();
     private Socket socket = new Socket();
-
+    private HTTPResponse pack2 = new HTTPResponse();
     UpdateID(Socket socket) {
         this.socket = socket;
     }
     Scanner sc = new Scanner(System.in);
     @Override
-    public Pack execute(String nameCommand, Pack pack) {
+    public HTTPRequest execute(String nameCommand, HTTPRequest pack) {
         try {
-            pack1.pack(nameCommand, arg);
+            pack1.pack(nameCommand, arg, HttpMethod.POST);
             request.request(pack1, socket);
-            pack1 = response.responseUpdate(socket);
-            if (pack1.getHumanBeing() != null) {
+            pack2 = response.responseUpdate(socket);
+            if (pack2.getHumanBeing() != null) {
                 print("Введите stop, когда захотите прервать изменение элемента коллекции!");
                 print("Введите значения для изменения ID: ");
                 String[] commandWords = new String[]{""};
@@ -43,7 +46,7 @@ public class UpdateID implements CommandInterfaceWithArgument {
                         commandWords = new String[0];
                         commandWords = str.trim().split(" ");
                         if (commandWords.length == 2) {
-                            updateById(commandWords[0], pack1.getHumanBeing(), Integer.parseInt(commandWords[1]));
+                            updateById(commandWords[0], pack2.getHumanBeing(), Integer.parseInt(commandWords[1]));
                         } else if (commandWords[0].equals("stop")) {
                             print("Человек был изменён!");
                         } else {
@@ -53,10 +56,10 @@ public class UpdateID implements CommandInterfaceWithArgument {
                         System.err.println("Не указано поле или значение!");
                     }
                 }
-                pack1.pack("get_dragon", pack1.getHumanBeing());
-                request.request(pack1, socket);
+                pack1.pack("get_human_being", pack2.getHumanBeing(), HttpMethod.GET);
+                request.request(pack2, socket);
             } else {
-                pack.pack(pack1.getCommandName());
+                pack.pack(pack2.getCommand(), HttpMethod.POST);
             }
             return pack;
         } catch (IOException | ClassNotFoundException e) {

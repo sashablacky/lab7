@@ -3,6 +3,7 @@ package banana0081.lab6.server.commands;
 import banana0081.lab6.Pack;
 import banana0081.lab6.collection.HumanBeingCollectionManager;
 import banana0081.lab6.data.HumanBeing;
+import banana0081.lab6.http.HTTPRequest;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +22,7 @@ class PrintUniqueImpactSpeedTest {
         collectionManager.getCollection().add(humanBeing2);
         humanBeing2.setImpactSpeed(5);
         uniqueImpactSpeed =  new PrintUniqueImpactSpeed(collectionManager);
-        uniqueImpactSpeed.execute(new Pack());
+        uniqueImpactSpeed.execute(new HTTPRequest());
         assertEquals("Уникальные значения impactSpeed\n3.0\n5.0\n", uniqueImpactSpeed.getResponse());
     }
 

@@ -2,6 +2,8 @@ package banana0081.lab6.server.commands;
 
 import banana0081.lab6.Pack;
 import banana0081.lab6.collection.HumanBeingCollectionManager;
+import banana0081.lab6.http.HTTPRequest;
+import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.CommandWithArguments;
 
 import java.util.HashSet;
@@ -19,12 +21,13 @@ public class RemoveById implements CommandWithArguments {
     }
 
     @Override
-    public Pack execute(Pack pack) {
+    public HTTPResponse execute(HTTPRequest httpRequest) {
+        HTTPResponse httpResponse = new HTTPResponse();
         for (String argument : arguments) {
             collectionManager.removeByID(Integer.parseInt(argument));
         }
-        pack.pack("Object was deleted.");
-        return pack;
+        httpResponse.pack(200, "OK");
+        return httpResponse;
     }
     @Override
     public void getArgs(String[] arguments) {

@@ -3,6 +3,7 @@ package banana0081.lab6.server.commands;
 import banana0081.lab6.Pack;
 import banana0081.lab6.collection.HumanBeingCollectionManager;
 import banana0081.lab6.data.HumanBeing;
+import banana0081.lab6.http.HTTPRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +21,7 @@ class ShuffleTest {
         LinkedList<HumanBeing> humanBeings1;
         humanBeings1=collectionManager.getCollection();
         Shuffle shuffle = new Shuffle(collectionManager);
-        shuffle.execute(new Pack());
+        shuffle.execute(new HTTPRequest());
         LinkedList<HumanBeing> humanBeings2;
         humanBeings2=collectionManager.getCollection();
         boolean areDifferent = humanBeings1.contains(humanBeings2);

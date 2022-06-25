@@ -2,6 +2,8 @@ package banana0081.lab6.server.commands;
 
 import banana0081.lab6.Pack;
 import banana0081.lab6.collection.HumanBeingCollectionManager;
+import banana0081.lab6.http.HTTPRequest;
+import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.Command;
 
 public class Clear implements Command {
@@ -12,13 +14,14 @@ public class Clear implements Command {
     }
 
     @Override
-    public Pack execute(Pack pack) {
+    public HTTPResponse execute(HTTPRequest httpRequest) {
         collectionManager.clear();
+        HTTPResponse httpResponse = new HTTPResponse();
         if (collectionManager.getCollection().isEmpty()){
-            pack.pack("Collection was cleared!\n");
+            httpResponse.pack(200, "Collection was cleared!\n");
         } else{
-            pack.pack("Collection was not cleared\n");
+            httpResponse.pack(500,"Collection was not cleared\n");
         }
-        return pack;
+        return httpResponse;
     }
 }

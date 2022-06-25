@@ -2,6 +2,8 @@ package banana0081.lab6.server.commands;
 
 import banana0081.lab6.Pack;
 import banana0081.lab6.collection.HumanBeingCollectionManager;
+import banana0081.lab6.http.HTTPRequest;
+import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.Command;
 
 public class Exit implements Command {
@@ -13,10 +15,11 @@ public class Exit implements Command {
     }
 
     @Override
-    public Pack execute(Pack pack) {
+    public HTTPResponse execute(HTTPRequest httpRequest) {
 //        collectionManager.save;
-        pack.pack("Вы отключились от сервера\n");
-        return pack;
+        HTTPResponse httpResponse = new HTTPResponse();
+        httpResponse.pack(200, "Вы отключились от сервера\n");
+        return httpResponse;
     }
 
 }
