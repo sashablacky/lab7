@@ -29,11 +29,18 @@ public class Save{
     public HTTPResponse execute(HTTPRequest httpRequest) {
         HTTPResponse httpResponse = new HTTPResponse();
         try{
+            String sql = "DELETE FROM HUMANBEING;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.execute();
+            ps.close();
+        } catch(SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try{
             for(HumanBeing humanBeing : collectionManager.getCollection()){
-                String sql = "INSERT INTO HUMANBEING VALUES(" + humanBeing.toSqlString() + ")";
+                String sql = "INSERT INTO HUMANBEING (NAME, X_COORD, Y_COORD, CREATION_DATE, REAL_HERO, TOOTHPICK, IMPACT_SPEED, MINUTES, CREATOR, WEAPON_TYPE, MOOD, COOLNESS) VALUES(" + humanBeing.toSqlString() + ");";
                 PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setInt(1, 42);
-                ps.executeQuery().close();
+                ps.execute();
                 ps.close();
             }
         } catch (SQLException throwables) {

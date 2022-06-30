@@ -7,6 +7,7 @@ import banana0081.lab6.http.HTTPRequest;
 import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.Command;
 
+import java.sql.Connection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -28,7 +29,7 @@ public class PrintUniqueImpactSpeed implements Command {
         this.collectionManager = collectionManager;
     }
     @Override
-    public HTTPResponse execute(HTTPRequest httpRequest) {
+    public HTTPResponse execute(HTTPRequest httpRequest, Connection conn) {
         HTTPResponse httpResponse = new HTTPResponse();
         Set<Float> UniqueImpactSpeed = new HashSet<Float>();
         LinkedList<HumanBeing> Collection = collectionManager.getCollection();

@@ -7,6 +7,7 @@ import banana0081.lab6.http.HTTPRequest;
 import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.Command;
 
+import java.sql.Connection;
 import java.util.LinkedList;
 
 public class SumOfMinutesOfWaiting implements Command {
@@ -24,7 +25,7 @@ public class SumOfMinutesOfWaiting implements Command {
         this.collectionManager = collectionManager;
     }
     @Override
-    public HTTPResponse execute(HTTPRequest httpRequest) {
+    public HTTPResponse execute(HTTPRequest httpRequest, Connection conn) {
         long res = 0;
         HTTPResponse httpResponse = new HTTPResponse();
         LinkedList<HumanBeing> Collection = collectionManager.getCollection();

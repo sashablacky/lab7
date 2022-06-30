@@ -31,6 +31,10 @@ public class Car implements Validatable, Serializable {
         return s;
     }
 
+    public String toSqlString(){
+        String s = cool.toString();
+        return s;
+    }
     public boolean validate(){
         return (cool!=null);
     }

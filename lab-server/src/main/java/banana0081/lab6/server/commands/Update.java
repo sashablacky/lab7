@@ -6,6 +6,7 @@ import banana0081.lab6.http.HTTPRequest;
 import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.CommandWithArguments;
 
+import java.sql.Connection;
 import java.util.Scanner;
 
 public class Update implements CommandWithArguments {
@@ -18,7 +19,7 @@ public class Update implements CommandWithArguments {
     }
 
     @Override
-    public HTTPResponse execute(HTTPRequest httpRequest) {
+    public HTTPResponse execute(HTTPRequest httpRequest, Connection conn) {
         HTTPResponse httpResponse = new HTTPResponse();
         Integer arg = httpRequest.getIntegerArgument();
         String user = httpRequest.getAuthorization();

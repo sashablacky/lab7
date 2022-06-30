@@ -37,6 +37,6 @@ public class Coordinates implements Validatable, Serializable {
     }
 
     public String toSqlString() {
-        return(String.valueOf(x) + " " + String.valueOf(y));
+        return(String.valueOf(x) + ", " + String.valueOf(y));
     }
 }

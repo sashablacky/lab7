@@ -15,24 +15,25 @@ public class CreateTable {
             System.out.println("Opened database successfully");
             stmt = c.createStatement();
 
-            /*String sql = "CREATE TABLE HUMANBEING " +
-                    "(ID INT PRIMARY KEY     NOT NULL," +
+            String sql = "CREATE TABLE HUMANBEING " +
+                    "(ID SERIAL PRIMARY KEY     NOT NULL," +
                     " NAME           TEXT    NOT NULL, " +
                     " CREATOR        TEXT     NOT NULL, " +
-                    " X_COORD        INT      NOT NULL, " +
-                    " Y_COORD         REAL    NOT NULL," +
+                    " X_COORD        REAL      NOT NULL, " +
+                    " Y_COORD        INT    NOT NULL," +
                     " CREATION_DATE BIGINT    NOT NULL," +
                     " REAL_HERO BOOLEAN       NOT NULL," +
                     " TOOTHPICK BOOLEAN       NOT NULL," +
                     " IMPACT_SPEED REAL       NOT NULL," +
+                    " MINUTES INT             NOT NULL," +
                     " WEAPON_TYPE     TEXT," +
                     " MOOD           TEXT," +
                     " COOLNESS       BOOLEAN  NOT NULL)"
-                    ;*/
-            String sql = "CREATE TABLE USERS " +
+                    ;
+            /*String sql = "CREATE TABLE USERS " +
                     "(ID SERIAL PRIMARY KEY     NOT NULL," +
                     " LOGIN        TEXT    NOT NULL," +
-                    " PASSWORD     TEXT    NOT NULL)";
+                    " PASSWORD     TEXT    NOT NULL)";*/
             stmt.executeUpdate(sql);
             stmt.close();
             c.close();

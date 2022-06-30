@@ -7,6 +7,9 @@ import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.CommandWithArguments;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -22,10 +25,19 @@ public class RemoveById implements CommandWithArguments {
     }
 
     @Override
-    public HTTPResponse execute(HTTPRequest httpRequest) {
+    public HTTPResponse execute(HTTPRequest httpRequest, Connection conn) {
         HTTPResponse httpResponse = new HTTPResponse();
-        for (String argument : httpRequest.getArguments()) {
-            collectionManager.removeByID(Integer.parseInt(argument));
+        try{
+            String sql = "DELETE * FROM HUMANBEING WHERE ID = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(httpRequest.getArguments()[0]));
+            ps.executeQuery().close();
+            ps.close();
+            for (String argument : httpRequest.getArguments()) {
+                collectionManager.removeByID(Integer.parseInt(argument));
+            }
+        } catch(SQLException throwables) {
+            throwables.printStackTrace();
         }
         httpResponse.pack(200, "OK");
         return httpResponse;

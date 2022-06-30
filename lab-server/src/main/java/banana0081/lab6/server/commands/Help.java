@@ -5,6 +5,8 @@ import banana0081.lab6.http.HTTPRequest;
 import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.Command;
 
+import java.sql.Connection;
+
 public class Help implements Command {
 
     private String[] help = new String[1];
@@ -22,7 +24,7 @@ public class Help implements Command {
     }
 
     @Override
-    public HTTPResponse execute(HTTPRequest httpRequest) {
+    public HTTPResponse execute(HTTPRequest httpRequest, Connection conn) {
         HTTPResponse httpResponse = new HTTPResponse();
         String resp = String.join("\n", "help : вывести справку по доступным командам",
                 "info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)",

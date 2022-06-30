@@ -7,6 +7,7 @@ import banana0081.lab6.http.HTTPRequest;
 import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.Command;
 
+import java.sql.Connection;
 import java.util.LinkedList;
 
 public class MinByMinutesOfWaiting implements Command {
@@ -25,7 +26,7 @@ public class MinByMinutesOfWaiting implements Command {
         return minutesOfWaiting;
     }
     @Override
-    public HTTPResponse execute(HTTPRequest httpRequest) {
+    public HTTPResponse execute(HTTPRequest httpRequest, Connection conn) {
         HTTPResponse httpResponse = new HTTPResponse();
         long minutesOfWaiting = Long.MAX_VALUE;
         LinkedList<HumanBeing> Collection = collectionManager.getCollection();

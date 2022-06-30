@@ -69,11 +69,11 @@ public class CommandInvokerServer {
                 CommandWithArguments command;
                 command = commandWithArguments.get(nameCommand.toLowerCase(Locale.ROOT));
                 command.getArgs(args);
-                response = command.execute(httpRequest);
+                response = command.execute(httpRequest, conn);
             } else if (commandWithoutArguments.containsKey(nameCommand.toLowerCase(Locale.ROOT))) {
                 Command command;
                 command = commandWithoutArguments.get(nameCommand.toLowerCase(Locale.ROOT));
-                response = command.execute(httpRequest);
+                response = command.execute(httpRequest, conn);
             } else {
                 response.pack(new String[]{"Команда не найдена!"}, 404, "Not Found");
             }

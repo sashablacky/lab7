@@ -5,6 +5,8 @@ import banana0081.lab6.http.HTTPRequest;
 import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.CommandWithArguments;
 
+import java.sql.Connection;
+
 public class UpdateById implements CommandWithArguments {
     private final HumanBeingCollectionManager collectionManager;
     private String[] arg;
@@ -14,7 +16,7 @@ public class UpdateById implements CommandWithArguments {
     }
 
     @Override
-    public HTTPResponse execute(HTTPRequest httpRequest) {
+    public HTTPResponse execute(HTTPRequest httpRequest, Connection conn) {
         int previousSize = collectionManager.getPreviousSize();
         HTTPResponse httpResponse = new HTTPResponse();
         if (collectionManager.updateByID(httpRequest.getHumanBeing().getId(), httpRequest.getHumanBeing())){

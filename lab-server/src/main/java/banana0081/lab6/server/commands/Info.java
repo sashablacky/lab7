@@ -6,6 +6,8 @@ import banana0081.lab6.http.HTTPRequest;
 import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.Command;
 
+import java.sql.Connection;
+
 public class Info implements Command {
     private final HumanBeingCollectionManager collectionManager;
     private String[] Information = new String[1];
@@ -21,7 +23,7 @@ public class Info implements Command {
         this.Information[0] = info;
     }
     @Override
-    public HTTPResponse execute(HTTPRequest httpRequest) {
+    public HTTPResponse execute(HTTPRequest httpRequest, Connection conn) {
         HTTPResponse httpResponse = new HTTPResponse();
         this.setInfo(collectionManager.getInfo());
         httpResponse.pack(Information, 200, "OK");

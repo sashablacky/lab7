@@ -6,6 +6,8 @@ import banana0081.lab6.http.HTTPRequest;
 import banana0081.lab6.http.HTTPResponse;
 import banana0081.lab6.server.interfaces.Command;
 
+import java.sql.Connection;
+
 public class Exit implements Command {
 
     HumanBeingCollectionManager collectionManager;
@@ -15,7 +17,7 @@ public class Exit implements Command {
     }
 
     @Override
-    public HTTPResponse execute(HTTPRequest httpRequest) {
+    public HTTPResponse execute(HTTPRequest httpRequest, Connection conn) {
 //        collectionManager.save;
         HTTPResponse httpResponse = new HTTPResponse();
         httpResponse.pack(200, "Вы отключились от сервера\n");

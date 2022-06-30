@@ -198,19 +198,19 @@ public class HumanBeing implements Collectionable, Serializable {
     }
     public String toSqlString(){
         String s = "";
-        s += name + " ";
-        s += coordinates.toSqlString() + " ";
-        s += creationDate + " ";
-        s += realHero + " ";
-        s += hasToothpick + " ";
-        s += impactSpeed + " ";
-        s += minutesOfWaiting + " ";
-        s += creator + " ";
-        if (mood!=null){ s += weaponType.toString() + " ";}
-        else{ s+= "null ";};
-        if (mood!=null){s += mood + " ";}
-        else{ s+="null";}
-        s += car.toString();
+        s += "'" + name + "', ";
+        s += coordinates.toSqlString() + ", ";
+        s += creationDate.getTime()/1000 + ", ";
+        s += "'" + realHero + "', ";
+        s += "'" + hasToothpick + "', ";
+        s += "'" + impactSpeed + "', ";
+        s += "'" + minutesOfWaiting + "', ";
+        s += "'" + creator + "', ";
+        if (weaponType!=null){ s += "'" + weaponType.toString() + "', ";}
+        else{ s+= "null ,";};
+        if (mood!=null){s += "'" + mood + "', ";}
+        else{ s+="null ,";}
+        s += "'" + car.toSqlString() + "'";
         return s;
     }
     /** 
