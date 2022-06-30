@@ -36,4 +36,7 @@ public class Coordinates implements Validatable, Serializable {
         return !(y==null || y <=-123 || Float.isInfinite(x) || Float.isNaN(x));
     }
 
+    public String toSqlString() {
+        return(String.valueOf(x) + " " + String.valueOf(y));
+    }
 }

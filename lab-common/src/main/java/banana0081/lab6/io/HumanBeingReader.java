@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class HumanBeingReader implements InputManager {
     private static Scanner scanner = new Scanner(System.in);
-
+    private static Boolean consoleMode = true;
     public HumanBeingReader(Scanner sc) {
         this.scanner = sc;
         scanner.useDelimiter("\n");
@@ -26,46 +26,60 @@ public class HumanBeingReader implements InputManager {
         scanner = sc;
     }
 
-    public String readName() throws EmptyStringException {
-        System.out.println("Введите имя");
+    public static void setConsoleMode(Boolean cMode) {
+        consoleMode = cMode;
+    }
+
+    public String readName(){
+        if(consoleMode) {
+            System.out.println("Введите имя: ");
+        }
         String s = scanner.nextLine().trim();
         if (s.equals("")) {
-            throw new EmptyStringException();
+            System.out.println("Имя не должно быть пустой строкой");
+            return readName();
         }
         return s;
     }
 
     public float readXCoord() throws InvalidNumberException {
         float x;
-        System.out.println("Введите x");
+        if(consoleMode) {
+            System.out.println("Введите x (дробное число): ");
+        }
         try {
             x = Float.parseFloat(scanner.nextLine());
         } catch (NumberFormatException e) {
             throw new InvalidNumberException();
         }
-        if (Float.isInfinite(x) || Float.isNaN(x)) throw new InvalidNumberException("invalid float value");
+        if (Float.isInfinite(x) || Float.isNaN(x)) throw new InvalidNumberException("invalid x float value");
         return x;
     }
 
     public Long readYCoord() throws InvalidNumberException {
         long y;
-        System.out.println("Введите y");
+        if(consoleMode) {
+            System.out.println("Введите y (целое число большее -684): ");
+        }
         try {
             y = Long.parseLong(scanner.nextLine());
         } catch (NumberFormatException e) {
             throw new InvalidNumberException();
         }
-        if (y <= -684) throw new InvalidNumberException("must be greater than -684");
+        if (y <= -684) throw new InvalidNumberException("y must be greater than -684");
         return y;
     }
 
-    public Coordinates readCoords() throws InvalidNumberException {
-        float x = readXCoord();
-        Long y = readYCoord();
-        return new Coordinates(x, y);
+    public Coordinates readCoords(){
+        try {
+            float x = readXCoord();
+            Long y = readYCoord();
+            return new Coordinates(x, y);
+        } catch (InvalidNumberException e){System.out.println(e.getMessage());
+        return readCoords();}
     }
 
-    public static Boolean parseBool() throws InvalidBooleanException {
+    public static Boolean parseBool() throws InvalidBooleanException{
         String buf = scanner.nextLine();
         return switch (buf.toLowerCase()) {
             case "true" -> true;
@@ -75,53 +89,80 @@ public class HumanBeingReader implements InputManager {
         };
     }
 
-    public Boolean readRealHero() throws InvalidBooleanException {
-        System.out.println("Введите realHero");
+    public Boolean readRealHero(){
+        if(consoleMode) {
+            System.out.println("Введите realHero (true/false): ");
+        }
         Boolean bool;
-        bool = parseBool();
-        if (bool == null) {
-            throw new InvalidBooleanException("realHero must not be null");
+        try {
+            bool = parseBool();
+            if (bool == null) {
+                throw new InvalidBooleanException("realHero must not be null");
+            }
+            return bool;
+        } catch (InvalidBooleanException e){
+            System.out.println(e.getMessage());
+            return readRealHero();
         }
-        return bool;
     }
 
-    public Boolean readHasToothpick() throws InvalidBooleanException {
-        System.out.println("Введите toothpick");
+    public Boolean readHasToothpick(){
+        if(consoleMode) {
+            System.out.println("Введите toothpick (true/false): ");
+        }
         Boolean bool;
-        bool = parseBool();
-        if (bool == null) {
-            throw new InvalidBooleanException("hasToothpick must not be null");
-        }
-        return bool;
-    }
-
-    public float readImpactSpeed() throws InvalidNumberException {
-        System.out.println("Введите impactSpeed");
-        float impactSpeed;
         try {
-            impactSpeed = Float.parseFloat(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            throw new InvalidNumberException();
+            bool = parseBool();
+            if (bool == null) {throw new InvalidBooleanException("hasToothpick must not be null");}
+            return bool;
         }
-        if (Float.isInfinite(impactSpeed) || Float.isNaN(impactSpeed))
-            throw new InvalidNumberException("invalid float value");
-        if (impactSpeed > 64.0f) throw new InvalidNumberException("impact speed must not be greater than 64");
-        return impactSpeed;
-    }
+        catch (InvalidBooleanException e){
+                System.out.println(e.getMessage());
+                return readHasToothpick();
+            }
+        }
 
-    public Long readMinutesOfWaiting() throws InvalidNumberException {
-        System.out.println("Введите minutesOfWaiting");
-        long minutesOfWaiting;
+    public float readImpactSpeed(){
+        if(consoleMode) {
+            System.out.println("Введите impactSpeed (дробное число, меньшее 64): ");
+        }
         try {
-            minutesOfWaiting = Long.parseLong(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            throw new InvalidNumberException();
-        }
-        return minutesOfWaiting;
+            float impactSpeed;
+            try {
+                impactSpeed = Float.parseFloat(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                throw new InvalidNumberException();
+            }
+            if (Float.isInfinite(impactSpeed) || Float.isNaN(impactSpeed))
+                throw new InvalidNumberException("invalid float value");
+            if (impactSpeed > 64.0f) throw new InvalidNumberException("impact speed must not be greater than 64");
+            return impactSpeed;
+        } catch (InvalidNumberException e){System.out.println(e.getMessage());
+        return readImpactSpeed();}
+
     }
 
-    public WeaponType readWeaponType() throws InvalidEnumException {
-        System.out.println("Введите weaponType");
+    public Long readMinutesOfWaiting(){
+        if(consoleMode) {
+            System.out.println("Введите minutesOfWaiting (целое число): ");
+        }
+        try {
+            long minutesOfWaiting;
+            try {
+                minutesOfWaiting = Long.parseLong(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                throw new InvalidNumberException();
+            }
+            return minutesOfWaiting;
+        } catch(InvalidNumberException e){System.out.println(e.getMessage());
+        return readMinutesOfWaiting();}
+
+    }
+
+    public WeaponType readWeaponType() {
+        if(consoleMode) {
+            System.out.println("Введите weaponType (AXE, SHOTGUN, MACHINE_GUN) или оставьте поле пустым: ");
+        }
         String buf = scanner.nextLine().trim().toUpperCase();
         if (buf.equals("")) {
             return null;
@@ -129,13 +170,16 @@ public class HumanBeingReader implements InputManager {
             try {
                 return WeaponType.valueOf(buf);
             } catch (IllegalArgumentException e) {
-                throw new InvalidEnumException();
+                System.out.println(e.getMessage());
+                return readWeaponType();
             }
         }
     }
 
-    public Mood readMood() throws InvalidEnumException {
-        System.out.println("Введите mood");
+    public Mood readMood(){
+        if(consoleMode) {
+            System.out.println("Введите mood (SORROW, LONGING, GLOOM, CALM) или оставьте поле пустым: ");
+        }
         String buf = scanner.nextLine().trim().toUpperCase();
         if (buf.equals("")) {
             return null;
@@ -143,19 +187,26 @@ public class HumanBeingReader implements InputManager {
             try {
                 return Mood.valueOf(buf);
             } catch (IllegalArgumentException e) {
-                throw new InvalidEnumException();
+                System.out.println(e.getMessage());
+                return readMood();
             }
         }
     }
 
-    public Boolean readCoolness() throws InvalidBooleanException {
-        System.out.println("Введите крутость машины");
-        Boolean isCool;
-        isCool = parseBool();
-        if (isCool == null) {
-            throw new InvalidBooleanException("Coolness must not be null");
+    public Boolean readCoolness(){
+        if(consoleMode) {
+            System.out.println("Введите крутость машины (true/false): ");
         }
-        return isCool;
+        Boolean isCool;
+        try {
+            isCool = parseBool();
+            if (isCool == null) {
+                throw new InvalidBooleanException("Coolness must not be null");
+            }
+            return isCool;
+        } catch (InvalidBooleanException e){System.out.println(e.getMessage());
+        return readCoolness();}
+
     }
 
     public Car readCar() throws InvalidDataException {

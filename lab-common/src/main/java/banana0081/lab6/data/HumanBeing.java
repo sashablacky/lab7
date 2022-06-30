@@ -23,7 +23,7 @@ public class HumanBeing implements Collectionable, Serializable {
     private WeaponType weaponType; //Поле может быть null
     private Mood mood; //Поле может быть null
     private Car car; //Поле не может быть null
-
+    private String creator;
 
     /**
      * Constructor, set fields
@@ -76,6 +76,11 @@ public class HumanBeing implements Collectionable, Serializable {
         return name;
     }
 
+    public String getCreator(){return creator;}
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
 
     public void setName(String NewName){
         this.name = NewName;
@@ -184,10 +189,28 @@ public class HumanBeing implements Collectionable, Serializable {
         s += "  \"hasToothpick\" : " + hasToothpick + ",\n";
         s += "  \"impactSpeed\" : " + impactSpeed + ",\n";
         s += "  \"minutesOfWaiting\" : " + minutesOfWaiting + ",\n";
+        s += "  \"creator\" : " + creator + ",\n";
         if (mood!=null) s += "  \"weaponType\" : " + weaponType.toString() + ",\n";
         if (mood!=null) s += "  \"mood\" : " + mood + ",\n";
         s += "  \"car\" : " + car.toString() + "\n";
         s += "}";
+        return s;
+    }
+    public String toSqlString(){
+        String s = "";
+        s += name + " ";
+        s += coordinates.toSqlString() + " ";
+        s += creationDate + " ";
+        s += realHero + " ";
+        s += hasToothpick + " ";
+        s += impactSpeed + " ";
+        s += minutesOfWaiting + " ";
+        s += creator + " ";
+        if (mood!=null){ s += weaponType.toString() + " ";}
+        else{ s+= "null ";};
+        if (mood!=null){s += mood + " ";}
+        else{ s+="null";}
+        s += car.toString();
         return s;
     }
     /** 

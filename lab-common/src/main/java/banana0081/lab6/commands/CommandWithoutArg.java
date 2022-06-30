@@ -11,7 +11,7 @@ public class CommandWithoutArg implements CommandInterface {
 
     @Override
     public HTTPRequest execute(String nameCommand, HTTPRequest httpRequest) {
-        if(nameCommand == "help" || nameCommand == "show" || nameCommand == "info") {
+        if(nameCommand.equals("help") || nameCommand.equals("show") || nameCommand.equals("info")) {
             httpRequest.pack(nameCommand, HttpMethod.GET);
         }
         else{

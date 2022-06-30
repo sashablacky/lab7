@@ -47,8 +47,6 @@ public class Response {
         byte[] bytes = new byte[32768];
         socket.getInputStream().read(bytes);
         httpResponse = deserialize(bytes);
-        if (!httpResponse.getBody().equals(""))
-            printErr(httpResponse.getBody());
         return httpResponse;
     }
 

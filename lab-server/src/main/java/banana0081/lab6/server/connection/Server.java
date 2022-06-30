@@ -15,15 +15,16 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
 import java.util.LinkedList;
 import java.util.Map;
 
 public class Server {
-    private String file;
+    private Connection conn;
     HumanBeingCollectionManager collectionManager;
 
-    public Server(String file) {
-        this.file = file; this.collectionManager = new HumanBeingCollectionManager(file);
+    public Server(Connection conn) {
+        this.conn = conn; this.collectionManager = new HumanBeingCollectionManager(conn);
     }
 
     public void run(int port) {
@@ -37,7 +38,7 @@ public class Server {
                 e.printStackTrace();
             }
             try{
-                Save save = new Save(collectionManager);
+                Save save = new Save(collectionManager, conn);
                 HTTPRequest httpRequest = new HTTPRequest();
                 save.execute(httpRequest);
             } catch (NullPointerException e) {
@@ -63,7 +64,7 @@ public class Server {
             serverSocket.bind(new InetSocketAddress(port));
             serverSocket.configureBlocking(false);
             ClientReader clientReader = new ClientReader();
-            clientReader.reader(serverSocket, collectionManager);
+            clientReader.reader(serverSocket, collectionManager, conn);
         } catch (IOException e) {
             IOUtils.println("Ошибка ввода/вывода!");
         } catch (ClassNotFoundException e) {

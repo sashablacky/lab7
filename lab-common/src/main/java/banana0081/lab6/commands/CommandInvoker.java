@@ -33,7 +33,7 @@ public class CommandInvoker {
         register("min_by_minutes_of_waiting", new CommandWithoutArg());
         register("print_unique_impact_speed", new CommandWithoutArg());
         register("add", new Add());
-        registerWithArg("update_id", new UpdateID(socket));
+        registerWithArg("update", new UpdateID(socket));
         registerWithArg("remove_by_id", new RemoveById());
         registerWithArg("execute_script", new ExecuteScript(socket));
 
@@ -56,8 +56,11 @@ public class CommandInvoker {
                 CommandInterfaceWithArgument command;
                 command = commandWithArgument.get(word[0].toLowerCase(Locale.ROOT));
                 command.getArg(arg);
-                command.execute(word[0], pack);
-                return true;
+                HTTPRequest a = command.execute(word[0], pack);
+                if(a!=null) {
+                    return true;
+                }
+                else{return false;}
             } else {
                 printErr("У команды " + word[0] + " должен быть один аргумент!");
                 return false;
@@ -73,7 +76,7 @@ public class CommandInvoker {
                 return false;
             }
         } else {
-            printErr("Комманда " + word[0] + " не распознана, введите корректную команду!");
+            printErr("Команда " + word[0] + " не распознана, введите корректную команду!");
             return false;
         }
     }

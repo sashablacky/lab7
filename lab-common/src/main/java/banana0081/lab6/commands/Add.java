@@ -17,7 +17,7 @@ public class Add implements CommandInterface {
     public HTTPRequest execute(String nameCommand, HTTPRequest httpRequest) {
         HumanBeingReader humanBeingReader = new HumanBeingReader();
         try {
-            httpRequest.pack(nameCommand, humanBeingReader.readHumanBeing(), HttpMethod.POST);
+            httpRequest.pack(nameCommand, humanBeingReader.readHumanBeing(), HttpMethod.PUT);
         } catch(InvalidDataException e){System.out.println(e.getMessage());}
         return httpRequest;
     }

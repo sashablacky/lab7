@@ -13,6 +13,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.sql.Connection;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -21,9 +22,11 @@ public class ClientReader {
     private Scanner in = new Scanner(System.in);
     private HumanBeingReader HumanBeingReader = new HumanBeingReader(in);
     private String str = "";
+    private Connection conn;
 
-    void reader(ServerSocketChannel serverSocket, HumanBeingCollectionManager collectionManager) throws IOException, ClassNotFoundException {
+    void reader(ServerSocketChannel serverSocket, HumanBeingCollectionManager collectionManager, Connection conn) throws IOException, ClassNotFoundException {
         this.collectionManager = collectionManager;
+        this.conn = conn;
         Selector selector;
         selector = Selector.open();
         serverSocket.register(selector, SelectionKey.OP_ACCEPT);
@@ -54,7 +57,7 @@ public class ClientReader {
         HTTPResponse httpResponse = new HTTPResponse();
         Request request = new Request();
         SocketChannel client = (SocketChannel) key.channel();
-        CommandInvokerServer commandInvoker = new CommandInvokerServer(collectionManager, in, HumanBeingReader, client);
+        CommandInvokerServer commandInvoker = new CommandInvokerServer(collectionManager, in, HumanBeingReader, client, conn);
         int num = client.read(buffer);
         if (num == -1) {
             client.close();

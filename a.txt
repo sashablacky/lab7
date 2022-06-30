@@ -1,2 +1,11 @@
-show
-show
+add
+John
+3
+2
+true
+false
+4
+7
+AXE
+SORROW
+true

@@ -46,6 +46,7 @@ public class ExecuteScript implements CommandInterfaceWithArgument {
         try {
             scanner = new Scanner(file);
             HumanBeingReader.setScanner(scanner);
+            HumanBeingReader.setConsoleMode(false);
             print("Попытка прочитать команды из файла " + file.getName());
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
@@ -61,6 +62,7 @@ public class ExecuteScript implements CommandInterfaceWithArgument {
         }
         scriptsInProcess.remove(absolutePath);
         HumanBeingReader.setScanner(new Scanner(System.in));
+        HumanBeingReader.setConsoleMode(true);
         pack.pack(nameCommand, arg, HttpMethod.POST);
         return pack;
     }

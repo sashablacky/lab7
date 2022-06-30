@@ -9,6 +9,7 @@ import banana0081.lab6.server.interfaces.Command;
 import banana0081.lab6.server.interfaces.CommandWithArguments;
 
 import java.nio.channels.SocketChannel;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Scanner;
@@ -20,14 +21,16 @@ public class CommandInvokerServer {
     private final HumanBeingCollectionManager collectionManager;
     HumanBeingReader humanBeingReader;
     SocketChannel client;
+    Connection conn;
 
-    public CommandInvokerServer(HumanBeingCollectionManager collectionManager, Scanner in, HumanBeingReader humanBeingReader, SocketChannel client) {
+    public CommandInvokerServer(HumanBeingCollectionManager collectionManager, Scanner in, HumanBeingReader humanBeingReader, SocketChannel client, Connection conn) {
         this.collectionManager = collectionManager;
         this.in = in;
         this.humanBeingReader = humanBeingReader;
         commandWithoutArguments = new HashMap<>();
         commandWithArguments = new HashMap<>();
         this.client = client;
+        this.conn = conn;
         this.registerCommands();
     }
 
@@ -38,6 +41,7 @@ public class CommandInvokerServer {
         register("show", new Show(collectionManager));//
         register("add", new Add(collectionManager));//
         registerWithArgument("update", new Update(collectionManager));//
+        registerWithArgument("update_by_id", new UpdateById(collectionManager));//
         registerWithArgument("remove_by_id", new RemoveById(collectionManager, in));//
         register("clear", new Clear(collectionManager));//
         registerWithArgument("execute_script", new ExecuteScript());
@@ -46,7 +50,6 @@ public class CommandInvokerServer {
         register("sum_of_minutes_of_waiting", new SumOfMinutesOfWaiting(collectionManager));
         register("print_unique_impact_speed", new PrintUniqueImpactSpeed(collectionManager));
         register("min_by_minutes_of_waiting", new MinByMinutesOfWaiting(collectionManager));
-        register("save", new Save(collectionManager));
     }
 
     private void register(String name, Command command) {

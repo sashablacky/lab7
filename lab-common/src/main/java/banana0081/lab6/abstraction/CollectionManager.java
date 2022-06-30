@@ -49,7 +49,7 @@ public interface CollectionManager<T> {
      * @param id
      * @param newElement
      */
-    public void updateByID(Integer id, T newElement);
+    public boolean updateByID(Integer id, T newElement);
 
     /**
      * get collection size

@@ -20,8 +20,16 @@ public class Update implements CommandWithArguments {
     @Override
     public HTTPResponse execute(HTTPRequest httpRequest) {
         HTTPResponse httpResponse = new HTTPResponse();
-        if (collectionManager.getElementById(Integer.parseInt(arguments[0])) != null) {
-            httpResponse.pack(collectionManager.getElementById(Integer.parseInt(arguments[0])), 200, "OK");
+        Integer arg = httpRequest.getIntegerArgument();
+        String user = httpRequest.getAuthorization();
+        if (arg != null && collectionManager.getElementById(arg) != null) {
+            String creator = collectionManager.getElementById(arg).getCreator();
+            if(creator != null && creator.equals(user)) {
+                httpResponse.pack(collectionManager.getElementById(arg), 200, "OK");
+            }
+            else{
+                httpResponse.pack(403, "Forbidden");
+            }
         }
         else {
             httpResponse.pack(404, "Not Found");

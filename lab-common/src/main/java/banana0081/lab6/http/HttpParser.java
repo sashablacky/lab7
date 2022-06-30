@@ -59,7 +59,8 @@ public class HttpParser {
     public HTTPRequest wrap() {
         HTTPRequest httpRequest = new HTTPRequest();
         try {
-            httpRequest.setMethod(HttpMethod.valueOf(requestLine.split(" ")[0]));
+            String httpMethod = requestLine.split(" ")[0];
+            httpRequest.setMethod(HttpMethod.valueOf(httpMethod));
         } catch(IllegalArgumentException e){e.printStackTrace();}
         try {
             httpRequest.setCommand(requestLine.split(" ")[1].substring(1));
@@ -68,6 +69,7 @@ public class HttpParser {
         httpRequest.setHost(new Header("host", headers.get("Host")));
         httpRequest.setContentType(new Header("Content-Type", headers.get("Content-Type")));
         httpRequest.setContentLength(new Header("Content-Length", headers.get("Content-Length")));
+        httpRequest.setAuthorization(new Header("Authorization", headers.get("Authorization")));
         return httpRequest;
     }
     public HTTPResponse wrapResponse(){

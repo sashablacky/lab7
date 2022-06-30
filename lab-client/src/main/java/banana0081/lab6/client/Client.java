@@ -5,6 +5,7 @@ import banana0081.lab6.commands.CommandInvoker;
 import banana0081.lab6.connection.Request;
 import banana0081.lab6.connection.Response;
 import banana0081.lab6.http.HTTPRequest;
+import banana0081.lab6.http.Header;
 import banana0081.lab6.http.HttpMethod;
 import banana0081.lab6.io.InputManagerImpl;
 
@@ -12,6 +13,8 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Scanner;
 
 import static banana0081.lab6.io.OutputManager.print;
@@ -27,6 +30,13 @@ public class Client {
     Scanner sc = new Scanner(System.in);
     public void run(int port) {
         InetAddress address;
+        String login;
+        String password;
+        print("Введите логин: ");
+        login = sc.nextLine();
+        print("Введите пароль: ");
+        password = sc.nextLine();
+        byte[] encodedAuthorization = Base64.getEncoder().encode((login + ":" + password).getBytes(StandardCharsets.UTF_8));
         try {
             address = Inet4Address.getByName("localhost");
             while (true) {
@@ -34,7 +44,9 @@ public class Client {
                 CommandInvoker commandInvoker = new CommandInvoker(socket);
                 print("Введите команду: ");
                 String str = sc.nextLine();
-                if (commandInvoker.execute(str, pack) & !str.startsWith("update")) {
+                pack.setAuthorization(new Header("Authorization", "Basic " + new String(encodedAuthorization)));
+                if (commandInvoker.execute(str, pack)) {
+                    pack.setAuthorization(new Header("Authorization", "Basic " + new String(encodedAuthorization)));
                     request.request(pack, socket);
                     if (str.trim().equalsIgnoreCase("show"))
                         response.responseShow(socket);

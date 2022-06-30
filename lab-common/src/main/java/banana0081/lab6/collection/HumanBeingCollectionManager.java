@@ -3,6 +3,7 @@ package banana0081.lab6.collection;
 import banana0081.lab6.abstraction.CollectionManager;
 import banana0081.lab6.data.HumanBeing;
 
+import java.sql.Connection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -24,6 +25,11 @@ public class HumanBeingCollectionManager implements CollectionManager<HumanBeing
     }
 
     public HumanBeingCollectionManager(String sysEnvironment){
+        uniqueIds = new HashSet<>();
+        collection = new LinkedList<>();
+        initDate = java.time.LocalDateTime.now();
+    }
+    public HumanBeingCollectionManager(Connection conn){
         uniqueIds = new HashSet<>();
         collection = new LinkedList<>();
         initDate = java.time.LocalDateTime.now();
@@ -128,17 +134,18 @@ public class HumanBeingCollectionManager implements CollectionManager<HumanBeing
     * Delete element by ID
     * @param id ID
     */
-    public void updateByID(Integer id, HumanBeing newHumanBeing){
+    public boolean updateByID(Integer id, HumanBeing newHumanBeing){
         int idx = 0;
         for (HumanBeing humanBeing : collection){
             if (humanBeing.getId() == id){
                 newHumanBeing.setId(id);
                 collection.set(idx, newHumanBeing);
                 print("element #"+ id +" successfully updated");
-                return;
+                return true;
             }
             idx += 1;
         }
+        return false;
     }
 
     /**
